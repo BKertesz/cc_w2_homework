@@ -33,10 +33,13 @@ class TestGuest < Minitest::Test
     assert_equal("Toxic",@guest.favorite_song)
   end
 
-  # def test_is_favorite_song_playing?
-  #   @guest.find_out_favorite_song("Toxic")
-  #   assert_equal("Whoo!",@guest.is_favorite_song_playing?("Toxic"))
-  # end
+  def test_can_order
+    test_hash = {
+      item:"Beer",
+      price:3
+    }
+    assert_equal(test_hash,@guest.order("Beer",3))
+  end
 
 
 

@@ -24,17 +24,17 @@ class Guest
   end
 
   def is_favorite_song_playing?(playlist)
-    playlist.each do |x|
-      # binding.pry
-      # return "Whoo!" if x == @favorite_song
-      # return false
-      if x.title == @favorite_song
-        return "Whoo!"
-      # else
-      #   return false
-      end
-    end
+    playlist.each {|x| return "Whoo!" if x.title == @favorite_song}
     return false
+  end
+
+  def order(item,price)
+    new_hash = {
+      item: item,
+      price: price
+    }
+
+    return new_hash
   end
 
 

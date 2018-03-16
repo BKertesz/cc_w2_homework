@@ -2,12 +2,14 @@ require "minitest/autorun"
 require_relative "../room"
 require_relative "../song"
 require_relative "../guest"
+require_relative "../bar_tab"
 
 
 class TestRoom < Minitest::Test
 
   def setup
-    @room = Room.new(1,3,5)
+    @bar = BarTab.new()
+    @room = Room.new(1,3,5,@bar)
     @song = Song.new("Toxic","Brittney Spears")
     @guest = Guest.new("Pawel",100)
   end
@@ -30,6 +32,11 @@ class TestRoom < Minitest::Test
 
   def test_has_total_sum
     assert_equal(0,@room.sum)
+  end
+
+  def test_bar_access
+    result = @room.bar.total
+    assert_equal(0,result)
   end
 
   def test_has_entry_fee
@@ -62,13 +69,19 @@ class TestRoom < Minitest::Test
     assert_equal(true,@room.is_there_capacity?)
   end
 
-
-
   def test_anyone_has_favorite_on_playlist
     @guest.favorite_song = "Toxic"
     @room.add_song(@song)
     @room.check_in_guest(@guest)
     assert_equal(true,@room.playlist_favorites)
+  end
+
+  def test_can_guest_order
+    @room.check_in_guest(@guest)
+    new_order = @room.occupants[0].order("Coffee",3)
+    @room.bar.add_order(new_order)
+    @room.bar.update_total
+    assert_equal(3,@room.bar.total)
   end
 
 

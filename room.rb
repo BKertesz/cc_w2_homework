@@ -2,14 +2,16 @@ require "pry"
 
 class Room
   attr_reader :name, :occupants, :playlist, :max_capacity, :sum, :entry_fee
+  attr_accessor :bar
 
-  def initialize(name, max_capacity,entry_fee)
+  def initialize(name, max_capacity,entry_fee,bar)
     @name = name
     @max_capacity = max_capacity
     @occupants = []
     @playlist = []
     @sum = 0
     @entry_fee = entry_fee
+    @bar = bar
   end
 
   def is_there_capacity?()
