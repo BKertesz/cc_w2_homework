@@ -1,5 +1,5 @@
 class BarTab
-  attr_reader :total, :content
+  attr_accessor :total, :content
 
   def initialize()
     @total = 0

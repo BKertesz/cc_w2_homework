@@ -23,12 +23,6 @@ class Room
     return @playlist << song
   end
 
-  def check_in_guest(guest)
-    return false if !is_there_capacity?
-    return @occupants << guest if guest.remove_money(@entry_fee)
-    return false
-  end
-
   def check_out_guest(name)
     leaver = @occupants.find_index{|x| x.name == name}
     return @occupants.delete_at(leaver)
@@ -40,11 +34,20 @@ class Room
   end
 
   def playlist_favorites()
+    @occupants.each{|x| return x.is_favorite_song_playing?(@playlist) ? true : false}
+  end
 
-    @occupants.each do |x|
-       return x.is_favorite_song_playing?(@playlist) ? true : false
-       # binding.pry
-    end
+  def check_in_guest(guest)
+    return false if !is_there_capacity?
+    return @occupants << guest if guest.remove_money(@entry_fee)
+    return false
+  end
+
+  def pay_off_bar(guest)
+    @bar.update_total
+    take_payment(guest,@bar.total)
+    @bar.content.clear
+    @bar.total = 0
   end
 
 end

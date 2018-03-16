@@ -84,5 +84,11 @@ class TestRoom < Minitest::Test
     assert_equal(3,@room.bar.total)
   end
 
+  def test_pay_off_bar_tab
+    @room.pay_off_bar(@guest)
+    assert_equal([],@room.bar.content)
+    assert_equal(0,@room.bar.total)
+  end
+
 
 end
