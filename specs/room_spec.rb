@@ -7,7 +7,7 @@ require_relative "../guest"
 class TestRoom < Minitest::Test
 
   def setup
-    @room = Room.new(1,3)
+    @room = Room.new(1,3,5)
     @song = Song.new("Toxic","Brittney Spears")
     @guest = Guest.new("Pawel",100)
   end
@@ -32,6 +32,10 @@ class TestRoom < Minitest::Test
     assert_equal(0,@room.sum)
   end
 
+  def test_has_entry_fee
+    assert_equal(5,@room.entry_fee)
+  end
+
   def test_add_song
     @room.add_song(@song)
     assert_equal(1,@room.playlist.length)
@@ -45,19 +49,27 @@ class TestRoom < Minitest::Test
 
   def test_check_in_guest
     @room.check_in_guest(@guest)
-    assert_equal(1,@room.occupants)
+    assert_equal(1,@room.occupants.length)
   end
 
   def test_check_out_guest
     @room.check_in_guest(@guest)
     @room.check_out_guest("Pawel")
-    assert_equal(0,@room.occupants)
+    assert_equal(0,@room.occupants.length)
   end
 
   def test_is_there_capacity?
     assert_equal(true,@room.is_there_capacity?)
   end
 
+
+
+  def test_anyone_has_favorite_on_playlist
+    @guest.favorite_song = "Toxic"
+    @room.add_song(@song)
+    @room.check_in_guest(@guest)
+    assert_equal(true,@room.playlist_favorites)
+  end
 
 
 end

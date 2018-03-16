@@ -1,7 +1,6 @@
 require "minitest/autorun"
 require_relative "../guest"
 
-
 class TestGuest < Minitest::Test
 
   def setup
@@ -16,14 +15,29 @@ class TestGuest < Minitest::Test
     assert_equal(100,@guest.money)
   end
 
-  def test_how_much_money?
-    assert_equal(100,@guest.how_much_money?)
+  def test_has_enough_money?
+    assert_equal(true,@guest.enough_money?(50))
   end
 
   def test_remove_money
     @guest.remove_money(20)
-    assert_equal(80,@guest.how_much_money?)
+    assert_equal(80,@guest.money)
   end
+
+  def test_has_favorite_song?
+    assert_nil(@guest.favorite_song)
+  end
+
+  def test_set_up_favorite_song
+    @guest.find_out_favorite_song("Toxic")
+    assert_equal("Toxic",@guest.favorite_song)
+  end
+
+  # def test_is_favorite_song_playing?
+  #   @guest.find_out_favorite_song("Toxic")
+  #   assert_equal("Whoo!",@guest.is_favorite_song_playing?("Toxic"))
+  # end
+
 
 
 end
